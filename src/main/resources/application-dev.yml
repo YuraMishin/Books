@@ -1,6 +1,0 @@
-# Logging
-logging:
-  level:
-    root: error
-    com.mishinyura.books: info
-  file.name: logs/application.log
