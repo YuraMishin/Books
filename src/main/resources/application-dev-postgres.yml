@@ -1,0 +1,18 @@
+# Logging
+logging:
+  level:
+    root: error
+    com.mishinyura.books: info
+    org.springframework.jdbc.core: debug
+  file.name: logs/application.log
+#
+# DB
+spring:
+  datasource:
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 5
+    url: jdbc:postgresql://localhost:5432/books?currentSchema=public
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
