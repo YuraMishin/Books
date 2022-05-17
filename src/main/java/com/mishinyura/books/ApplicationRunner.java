@@ -1,6 +1,8 @@
 package com.mishinyura.books;
 
+import com.mishinyura.books.dao.BookDaoImpl;
 import com.mishinyura.books.db.ConnectionManager;
+import com.mishinyura.books.entity.BookV1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,7 +18,10 @@ public class ApplicationRunner {
         log.info("Hello, Yura!");
 
         try (Connection con = ConnectionManager.open()) {
-            log.info("Your database is: {}", con.getCatalog());
+            BookV1 book = BookDaoImpl.getInstance()
+                    .save(new BookV1("daoSave"), con);
+            log.info(book.toString());
+
         } catch (Exception e) {
 
         }
