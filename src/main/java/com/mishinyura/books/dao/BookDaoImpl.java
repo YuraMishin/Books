@@ -86,6 +86,7 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
                     books.add(MAPPER.map(rs));
                 }
             }
+            log.info("{} row(s) fetched", books.size());
             return books;
         } catch (SQLException e) {
             log.error(
@@ -111,11 +112,37 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
             if (rs.next()) {
                 book = MAPPER.map(rs);
             }
-            return Optional.ofNullable(book);
+            Optional<BookV1> bookReturn = (Optional<BookV1>) Optional.ofNullable(book);
+            bookReturn.ifPresentOrElse(
+                    bookV1 -> log.info("1 row found"),
+                    () -> log.info("0 row found")
+            );
+            return bookReturn;
 
         } catch (SQLException e) {
             log.error(
                     "Exception caught while performing find by id: {}",
+                    e.getMessage()
+            );
+            throw new DaoException(e);
+        }
+    }
+
+    /**
+     * Method updates book.
+     *
+     * @param book BookV1
+     * @param conn Connection
+     */
+    public void update(final BookV1 book, final Connection conn) {
+        try (PreparedStatement ps = conn.prepareStatement(SqlQueries.UPDATE_BOOK_BY_ID)) {
+            ps.setString(1, book.getTitle());
+            ps.setLong(2, book.getId());
+            log.info("{} row updated", ps.executeUpdate());
+
+        } catch (SQLException e) {
+            log.error(
+                    "Exception caught while performing update book: {}",
                     e.getMessage()
             );
             throw new DaoException(e);
