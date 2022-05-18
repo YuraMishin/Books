@@ -46,4 +46,12 @@ public final class SqlQueries {
             SET title = ?
             WHERE id = ?;
             """;
+
+    /**
+     * Delete book by id.
+     */
+    public static final String DELETE_BOOK_BY_ID = """
+            DELETE FROM books
+            WHERE id = ?;
+            """;
 }

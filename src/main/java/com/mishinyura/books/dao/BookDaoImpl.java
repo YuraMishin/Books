@@ -148,4 +148,31 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
             throw new DaoException(e);
         }
     }
+
+    /**
+     * Method deletes book by id.
+     *
+     * @param id   Id
+     * @param conn Connection
+     * @return boolean
+     */
+    public boolean delete(final Long id, final Connection conn) {
+        try (PreparedStatement ps = conn.prepareStatement(SqlQueries.DELETE_BOOK_BY_ID)) {
+            ps.setLong(1, id);
+            boolean result = ps.executeUpdate() > 0;
+            if (result) {
+                log.info("1 row deleted");
+            } else {
+                log.info("0 row deleted");
+
+            }
+            return result;
+        } catch (SQLException e) {
+            log.error(
+                    "Exception caught while performing delete book: {}",
+                    e.getMessage()
+            );
+            throw new DaoException(e);
+        }
+    }
 }
