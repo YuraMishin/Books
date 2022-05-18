@@ -37,4 +37,13 @@ public final class SqlQueries {
             FROM books
             WHERE id = ?;
             """;
+
+    /**
+     * Update book by id.
+     */
+    public static final String UPDATE_BOOK_BY_ID = """
+            UPDATE books
+            SET title = ?
+            WHERE id = ?;
+            """;
 }

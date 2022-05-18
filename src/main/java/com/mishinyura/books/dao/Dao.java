@@ -39,4 +39,12 @@ public interface Dao<K, E> {
      * @return Optional<E>
      */
     Optional<E> findById(K id, Connection conn);
+
+    /**
+     * Method updates entity.
+     *
+     * @param entity Entity
+     * @param conn   Connection
+     */
+    void update(E entity, Connection conn);
 }
