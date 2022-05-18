@@ -28,4 +28,13 @@ public final class SqlQueries {
             SELECT id, title
             FROM books
             """;
+
+    /**
+     * Find book by id.
+     */
+    public static final String FIND_BOOK_BY_ID = """
+            SELECT id, title
+            FROM books
+            WHERE id = ?;
+            """;
 }

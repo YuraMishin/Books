@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Connection;
-import java.util.List;
+import java.util.Optional;
 
 @SpringBootApplication
 @Slf4j
@@ -19,8 +19,9 @@ public class ApplicationRunner {
         log.info("Hello, Yura!");
 
         try (Connection con = ConnectionManager.open()) {
-            List<BookV1> books = BookDaoImpl.getInstance()
-                    .findAll(con);
+            Optional<BookV1> book = BookDaoImpl.getInstance()
+                    .findById(1L, con);
+            System.out.println();
         } catch (Exception e) {
 
         }
