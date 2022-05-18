@@ -54,4 +54,13 @@ public final class SqlQueries {
             DELETE FROM books
             WHERE id = ?;
             """;
+
+    /**
+     * Get all books between two dates.
+     */
+    public static final String GET_BOOKS_BETWEEN_TWO_DATES = """
+            SELECT id, title, created_at, updated_at, version
+            FROM books
+            WHERE created_at BETWEEN ? AND ?;
+            """;
 }
