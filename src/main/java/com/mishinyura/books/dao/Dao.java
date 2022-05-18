@@ -47,4 +47,13 @@ public interface Dao<K, E> {
      * @param conn   Connection
      */
     void update(E entity, Connection conn);
+
+    /**
+     * Method deletes entity by id.
+     *
+     * @param id   Id
+     * @param conn Connection
+     * @return boolean
+     */
+    boolean delete(K id, Connection conn);
 }

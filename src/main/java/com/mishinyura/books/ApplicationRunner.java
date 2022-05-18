@@ -2,7 +2,6 @@ package com.mishinyura.books;
 
 import com.mishinyura.books.dao.BookDaoImpl;
 import com.mishinyura.books.db.ConnectionManager;
-import com.mishinyura.books.entity.BookV1;
 import com.mishinyura.books.exception.DaoException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
@@ -20,8 +19,7 @@ public class ApplicationRunner {
 
         try (Connection con = ConnectionManager.open()) {
             BookDaoImpl.getInstance()
-                    .update(new BookV1(1L, "from update"), con);
-            System.out.println();
+                    .delete(10L, con);
         } catch (Exception e) {
             log.error(
                     "Exception caught while performing sql: {}",
