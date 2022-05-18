@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.sql.Connection;
+import java.util.List;
 
 @SpringBootApplication
 @Slf4j
@@ -18,10 +19,8 @@ public class ApplicationRunner {
         log.info("Hello, Yura!");
 
         try (Connection con = ConnectionManager.open()) {
-            BookV1 book = BookDaoImpl.getInstance()
-                    .save(new BookV1("daoSave"), con);
-            log.info(book.toString());
-
+            List<BookV1> books = BookDaoImpl.getInstance()
+                    .findAll(con);
         } catch (Exception e) {
 
         }
