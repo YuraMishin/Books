@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Class BookDaoImpl.
@@ -48,9 +49,9 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
     /**
      * Method saves book.
      *
-     * @param book Book
+     * @param book BookV1
      * @param conn Connection
-     * @return Book
+     * @return BookV1
      */
     public BookV1 save(final BookV1 book, final Connection conn) {
         try (PreparedStatement ps = conn.prepareStatement(SqlQueries.INSERT_BOOK, Statement.RETURN_GENERATED_KEYS)) {
@@ -75,7 +76,7 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
      * Method gets all books.
      *
      * @param conn Connection
-     * @return List<Book>
+     * @return List<BookV1>
      */
     public List<BookV1> findAll(final Connection conn) {
         try (PreparedStatement ps = conn.prepareStatement(SqlQueries.FIND_ALL_BOOKS)) {
@@ -89,6 +90,32 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
         } catch (SQLException e) {
             log.error(
                     "Exception caught while performing find all: {}",
+                    e.getMessage()
+            );
+            throw new DaoException(e);
+        }
+    }
+
+    /**
+     * Method finds book by id.
+     *
+     * @param id   Id
+     * @param conn Connection
+     * @return Optional<BookV1>
+     */
+    public Optional<BookV1> findById(final Long id, final Connection conn) {
+        try (PreparedStatement ps = conn.prepareStatement(SqlQueries.FIND_BOOK_BY_ID)) {
+            ps.setLong(1, id);
+            ResultSet rs = ps.executeQuery();
+            BookV1 book = null;
+            if (rs.next()) {
+                book = MAPPER.map(rs);
+            }
+            return Optional.ofNullable(book);
+
+        } catch (SQLException e) {
+            log.error(
+                    "Exception caught while performing find by id: {}",
                     e.getMessage()
             );
             throw new DaoException(e);
