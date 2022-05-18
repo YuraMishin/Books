@@ -1,4 +1,4 @@
-package com.mishinyura.books.db;
+package com.mishinyura.books.dao;
 
 /**
  * Class SqlQueries.
@@ -25,7 +25,7 @@ public final class SqlQueries {
      * Find all books.
      */
     public static final String FIND_ALL_BOOKS = """
-            SELECT id, title
+            SELECT id, title, created_at, updated_at, version
             FROM books
             """;
 
@@ -33,7 +33,7 @@ public final class SqlQueries {
      * Find book by id.
      */
     public static final String FIND_BOOK_BY_ID = """
-            SELECT id, title
+            SELECT id, title, created_at, updated_at, version
             FROM books
             WHERE id = ?;
             """;
@@ -43,7 +43,7 @@ public final class SqlQueries {
      */
     public static final String UPDATE_BOOK_BY_ID = """
             UPDATE books
-            SET title = ?
+            SET title = ?, updated_at = now(), version = version + 1
             WHERE id = ?;
             """;
 
