@@ -20,4 +20,12 @@ public final class SqlQueries {
     public static final String INSERT_BOOK = """
             INSERT INTO books (title) VALUES (?);
             """;
+
+    /**
+     * Find all books.
+     */
+    public static final String FIND_ALL_BOOKS = """
+            SELECT id, title
+            FROM books
+            """;
 }

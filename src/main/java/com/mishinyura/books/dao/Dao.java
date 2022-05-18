@@ -1,6 +1,7 @@
 package com.mishinyura.books.dao;
 
 import java.sql.Connection;
+import java.util.List;
 
 /**
  * Interface Dao.
@@ -20,4 +21,12 @@ public interface Dao<K, E> {
      * @return E
      */
     E save(E entity, Connection conn);
+
+    /**
+     * Method gets all entities.
+     *
+     * @param conn Connection
+     * @return List<Entity>
+     */
+    List<E> findAll(Connection conn);
 }
