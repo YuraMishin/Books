@@ -9,6 +9,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -111,7 +113,7 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
             if (rs.next()) {
                 book = MAPPER.map(rs);
             }
-            Optional<BookV1> bookReturn = (Optional<BookV1>) Optional.ofNullable(book);
+            Optional<BookV1> bookReturn = Optional.ofNullable(book);
             bookReturn.ifPresentOrElse(
                     bookV1 -> log.info("1 row found"),
                     () -> log.info("0 row found")
@@ -169,6 +171,39 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
         } catch (SQLException e) {
             log.error(
                     "Exception caught while performing delete book: {}",
+                    e.getMessage()
+            );
+            throw new DaoException(e);
+        }
+    }
+
+    /**
+     * Method gets books between two dates.
+     *
+     * @param conn  Connection
+     * @param start Start
+     * @param end   End
+     * @return List<BookV1>
+     */
+    public List<BookV1> getBooksBetweenTwoDates(
+            final Connection conn,
+            final LocalDateTime start,
+            final LocalDateTime end) {
+        try (PreparedStatement ps = conn.prepareStatement(SqlQueries.GET_BOOKS_BETWEEN_TWO_DATES)) {
+            ps.setTimestamp(1, Timestamp.valueOf(start));
+            ps.setTimestamp(2, Timestamp.valueOf(end));
+            log.info(ps.toString());
+            List<BookV1> books = new ArrayList<>();
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    books.add(MAPPER.map(rs));
+                }
+            }
+            log.info("{} row(s) fetched", books.size());
+            return books;
+        } catch (SQLException e) {
+            log.error(
+                    "Exception caught while performing getBooksBetween(): {}",
                     e.getMessage()
             );
             throw new DaoException(e);
