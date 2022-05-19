@@ -1,5 +1,6 @@
 package com.mishinyura.books.dao;
 
+import com.mishinyura.books.dto.BookFilter;
 import com.mishinyura.books.entity.BookV1;
 import com.mishinyura.books.exception.DaoException;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +15,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static java.util.stream.Collectors.joining;
 
 /**
  * Class BookDaoImpl.
@@ -192,7 +195,7 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
         try (PreparedStatement ps = conn.prepareStatement(SqlQueries.GET_BOOKS_BETWEEN_TWO_DATES)) {
             ps.setTimestamp(1, Timestamp.valueOf(start));
             ps.setTimestamp(2, Timestamp.valueOf(end));
-            log.info(ps.toString());
+            log.debug(ps.toString());
             List<BookV1> books = new ArrayList<>();
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -204,6 +207,53 @@ public class BookDaoImpl implements Dao<Long, BookV1> {
         } catch (SQLException e) {
             log.error(
                     "Exception caught while performing getBooksBetween(): {}",
+                    e.getMessage()
+            );
+            throw new DaoException(e);
+        }
+    }
+
+    /**
+     * Method gets all books.
+     *
+     * @param filter Filter
+     * @param conn   Connection
+     * @return List<Book>
+     */
+    public List<BookV1> findAll(final BookFilter filter, final Connection conn) {
+        List<Object> parameters = new ArrayList<>();
+        List<String> whereSql = new ArrayList<>();
+        if (filter.title() != null) {
+            whereSql.add("title = ?");
+            parameters.add(filter.title());
+        }
+
+        parameters.add(filter.limit());
+        parameters.add(filter.offset());
+
+        String where = whereSql
+                .stream()
+                .collect(joining(" AND ", " WHERE ", " LIMIT ? OFFSET ?"));
+
+        String sql = SqlQueries.FIND_ALL_BOOKS + where;
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            for (int i = 0; i < parameters.size(); i++) {
+                ps.setObject(i + 1, parameters.get(i));
+            }
+
+            List<BookV1> books = new ArrayList<>();
+            log.debug(ps.toString());
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    books.add(MAPPER.map(rs));
+                }
+            }
+            log.info("{} row(s) fetched", books.size());
+            return books;
+        } catch (SQLException e) {
+            log.error(
+                    "Exception caught while performing find all by filter: {}",
                     e.getMessage()
             );
             throw new DaoException(e);
