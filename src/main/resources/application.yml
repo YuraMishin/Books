@@ -1,6 +1,9 @@
 spring:
   main:
-    banner-mode: off
+    banner-mode: console
+  banner:
+    image:
+      location: banner.txt
   profiles:
     active: dev-h2
 #    active: dev-postgres
