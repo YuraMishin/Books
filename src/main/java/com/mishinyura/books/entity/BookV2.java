@@ -1,5 +1,6 @@
 package com.mishinyura.books.entity;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -19,6 +20,7 @@ import java.time.LocalDateTime;
  * @author Mishin Yura (mishin.inbox@gmail.com)
  * @since 27.05.2022
  */
+@NoArgsConstructor
 @Entity
 @Table(name = "books")
 public class BookV2 {
@@ -54,4 +56,13 @@ public class BookV2 {
      */
     @Version
     private Long version = 1L;
+
+    /**
+     * Constructor.
+     *
+     * @param title Title
+     */
+    public BookV2(final String title) {
+        this.title = title;
+    }
 }

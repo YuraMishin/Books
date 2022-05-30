@@ -2,7 +2,7 @@ logging:
   level:
     root: error
     com.mishinyura.books: info
-    org.springframework.jdbc.core: debug
+#    org.springframework.jdbc.core: debug
   file.name: logs/application.log
 
 spring:
