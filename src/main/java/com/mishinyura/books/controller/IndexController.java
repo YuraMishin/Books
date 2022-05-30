@@ -14,14 +14,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class IndexController {
     /**
+     * Method displays helloworld string.
+     * GET: /hello
+     *
+     * @return String
+     */
+    @GetMapping(value = {"/hello"})
+    @ResponseBody
+    public String hello() {
+        return "Hello World!";
+    }
+
+    /**
      * Method displays index page.
      * GET: /, /index
      *
      * @return String
      */
     @GetMapping(value = {"", "/", "/index"})
-    @ResponseBody
     public String index() {
-        return "Hello World!";
+        return "index";
     }
 }
