@@ -1,6 +1,6 @@
-package com.mishinyura.books.repository;
+package com.mishinyura.books.repositories;
 
-import com.mishinyura.books.entity.BookV2;
+import com.mishinyura.books.entities.BookV2;
 import org.springframework.data.repository.CrudRepository;
 
 /**

@@ -1,5 +1,6 @@
-package com.mishinyura.books.entity;
+package com.mishinyura.books.entities;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,6 +28,7 @@ public class BookV2 {
     /**
      * Id.
      */
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,6 +36,7 @@ public class BookV2 {
     /**
      * Title.
      */
+    @Getter
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 

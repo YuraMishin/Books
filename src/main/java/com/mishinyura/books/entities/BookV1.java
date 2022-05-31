@@ -1,4 +1,4 @@
-package com.mishinyura.books.entity;
+package com.mishinyura.books.entities;
 
 import com.mishinyura.books.domain.Book;
 

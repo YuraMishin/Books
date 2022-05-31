@@ -1,6 +1,6 @@
 package com.mishinyura.books.dao;
 
-import com.mishinyura.books.entity.BookV1;
+import com.mishinyura.books.entities.BookV1;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 /**
  * Class BookEntityMapper.
- * Implements Book entity mapper.
+ * Implements Book entities mapper.
  *
  * @author Mishin Yura (mishin.inbox@gmail.com)
  * @since 28.03.2022

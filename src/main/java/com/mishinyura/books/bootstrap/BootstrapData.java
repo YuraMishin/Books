@@ -1,7 +1,7 @@
 package com.mishinyura.books.bootstrap;
 
-import com.mishinyura.books.entity.BookV2;
-import com.mishinyura.books.repository.BookRepository;
+import com.mishinyura.books.entities.BookV2;
+import com.mishinyura.books.repositories.BookRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
