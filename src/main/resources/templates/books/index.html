@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books - Index</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+</head>
+<body>
+<!--/*@thymesVar id="books" type="java.util.List"*/-->
+<!--/*@thymesVar id="book" type="com.mishinyura.books.entities.BookV2"*/-->
+<h1>Books - Index</h1>
+<p>
+    <a href="../">Back</a>
+</p>
+<div th:if="${not #lists.isEmpty(books)}">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.id}"></td>
+            <td th:text="${book.title}"></td>
+        </tr>
+        <tbody>
+    </table>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

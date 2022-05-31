@@ -1,4 +1,4 @@
-package com.mishinyura.books.util;
+package com.mishinyura.books.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;

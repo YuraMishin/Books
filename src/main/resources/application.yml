@@ -1,6 +1,6 @@
 spring:
   main:
-    banner-mode: console
+    banner-mode: off
   banner:
     image:
       location: banner.txt

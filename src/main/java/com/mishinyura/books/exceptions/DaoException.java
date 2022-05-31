@@ -1,4 +1,4 @@
-package com.mishinyura.books.exception;
+package com.mishinyura.books.exceptions;
 
 /**
  * Class DaoException.

@@ -1,6 +1,6 @@
 package com.mishinyura.books.db;
 
-import com.mishinyura.books.util.PropertiesUtil;
+import com.mishinyura.books.utils.PropertiesUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
