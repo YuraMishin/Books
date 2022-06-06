@@ -9,13 +9,13 @@ import java.util.Optional;
  * Declares DAO API.
  *
  * @param <K> key
- * @param <E> entities
+ * @param <E> models
  * @author Mishin Yura (mishin.inbox@gmail.com)
  * @since 17.05.2022
  */
 public interface Dao<K, E> {
     /**
-     * Method saves entities.
+     * Method saves models.
      *
      * @param entity Entity
      * @param conn   Connection
@@ -24,7 +24,7 @@ public interface Dao<K, E> {
     E save(E entity, Connection conn);
 
     /**
-     * Method gets all entities.
+     * Method gets all models.
      *
      * @param conn Connection
      * @return List<Entity>
@@ -32,7 +32,7 @@ public interface Dao<K, E> {
     List<E> findAll(Connection conn);
 
     /**
-     * Method finds entities by id.
+     * Method finds models by id.
      *
      * @param id   Id
      * @param conn Connection
@@ -41,7 +41,7 @@ public interface Dao<K, E> {
     Optional<E> findById(K id, Connection conn);
 
     /**
-     * Method updates entities.
+     * Method updates models.
      *
      * @param entity Entity
      * @param conn   Connection
@@ -49,7 +49,7 @@ public interface Dao<K, E> {
     void update(E entity, Connection conn);
 
     /**
-     * Method deletes entities by id.
+     * Method deletes models by id.
      *
      * @param id   Id
      * @param conn Connection

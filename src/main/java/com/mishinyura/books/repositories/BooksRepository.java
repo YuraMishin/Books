@@ -1,14 +1,14 @@
 package com.mishinyura.books.repositories;
 
-import com.mishinyura.books.entities.BookV2;
+import com.mishinyura.books.models.BookV2;
 import org.springframework.data.repository.CrudRepository;
 
 /**
- * Interface BookRepository.
- * Declares Book Repository.
+ * Interface BooksRepository.
+ * Declares Books Repository.
  *
  * @author Mishin Yura (mishin.inbox@gmail.com)
  * @since 30.05.2022
  */
-public interface BookRepository extends CrudRepository<BookV2, Long> {
+public interface BooksRepository extends CrudRepository<BookV2, Long> {
 }
