@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books - Show</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+</head>
+<body>
+<h1>Books - Show</h1>
+<p>
+    <a href="/books/">Back</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Title</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${book.id}"></td>
+        <td th:text="${book.title}"></td>
+    </tr>
+    </tbody>
+</table>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

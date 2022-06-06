@@ -1,7 +1,7 @@
 package com.mishinyura.books.dao;
 
 import com.mishinyura.books.dto.BookFilter;
-import com.mishinyura.books.entities.BookV1;
+import com.mishinyura.books.models.BookV1;
 import com.mishinyura.books.exceptions.DaoException;
 import lombok.extern.slf4j.Slf4j;
 

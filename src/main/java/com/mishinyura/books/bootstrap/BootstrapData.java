@@ -1,7 +1,7 @@
 package com.mishinyura.books.bootstrap;
 
-import com.mishinyura.books.entities.BookV2;
-import com.mishinyura.books.repositories.BookRepository;
+import com.mishinyura.books.models.BookV2;
+import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -21,7 +21,7 @@ public class BootstrapData implements CommandLineRunner {
     /**
      * Book Repository.
      */
-    private final BookRepository bookRepository;
+    private final BooksRepository booksRepository;
 
     /**
      * Method runs bootstrap code.
@@ -30,8 +30,8 @@ public class BootstrapData implements CommandLineRunner {
      */
     @Override
     public void run(final String... args) {
-        bookRepository.save(new BookV2("title1CLR"));
-        bookRepository.save(new BookV2("title2CLR"));
-        log.info("Loaded: {} book(s)", bookRepository.count());
+        booksRepository.save(new BookV2("title1CLR"));
+        booksRepository.save(new BookV2("title2CLR"));
+        log.info("Loaded: {} book(s)", booksRepository.count());
     }
 }

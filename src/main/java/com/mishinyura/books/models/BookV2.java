@@ -1,4 +1,4 @@
-package com.mishinyura.books.entities;
+package com.mishinyura.books.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
