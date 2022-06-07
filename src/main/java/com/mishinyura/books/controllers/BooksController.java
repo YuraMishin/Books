@@ -1,11 +1,14 @@
 package com.mishinyura.books.controllers;
 
+import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.services.BooksServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -43,11 +46,23 @@ public class BooksController {
      *
      * @param id    Id
      * @param model Model
-     * @return books/show specific book page
+     * @return books/show specific book page view
      */
     @GetMapping(value = "/{id}")
     public String show(@PathVariable String id, Model model) {
         model.addAttribute("book", booksService.findById(Long.parseLong(id)));
         return "books/show";
+    }
+
+    /**
+     * Method displays view to create a book.
+     * GET: /books/new
+     *
+     * @param book Book
+     * @return books/new book view
+     */
+    @GetMapping(value = "/new")
+    public String create(@ModelAttribute("book") BookV2 book) {
+        return "books/new";
     }
 }
