@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -89,7 +90,24 @@ public class BooksController {
      */
     @GetMapping(value = "/{id}/edit")
     public String edit(@PathVariable final Long id, final Model model) {
-        model.addAttribute("book", new BookV2("updateMe"));
+        model.addAttribute("book", booksService.findById(id));
         return "books/edit";
+    }
+
+    /**
+     * Method updates the book.
+     * PATCH: /books/{id}
+     *
+     * @param book Book
+     * @param id   Id
+     * @return books/index page view
+     */
+    @PatchMapping(value = "/{id}")
+    public String update(@ModelAttribute("book") final BookV2 book,
+                         @PathVariable("id") final Long id) {
+        BookV2 bookToBeUpdated = booksService.findById(id);
+        bookToBeUpdated.setTitle(book.getTitle());
+        booksService.save(bookToBeUpdated);
+        return "redirect:/books/";
     }
 }
