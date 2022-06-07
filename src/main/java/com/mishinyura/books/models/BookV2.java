@@ -2,6 +2,7 @@ package com.mishinyura.books.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -22,13 +23,14 @@ import java.time.LocalDateTime;
  * @since 27.05.2022
  */
 @NoArgsConstructor
+@Getter
+@Setter
 @Entity
 @Table(name = "books")
 public class BookV2 {
     /**
      * Id.
      */
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,7 +38,6 @@ public class BookV2 {
     /**
      * Title.
      */
-    @Getter
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
