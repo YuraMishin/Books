@@ -12,7 +12,8 @@
     <a href="/books/">Back</a>
 </p>
 <div class="container">
-    <form th:object="${book}" th:action="@{/books/}" method="POST">
+    <form th:object="${book}" th:action="@{/books/{id}(id=${book.getId()})}"
+          th:method="PATCH">
         <input type="hidden" th:field="*{id}"/>
         <div class="form-group">
             <label for="title">Title</label>
@@ -23,7 +24,7 @@
         <div class="form-group">
             <p>&nbsp;</p>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>
 <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
