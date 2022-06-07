@@ -32,7 +32,7 @@ public class BooksController {
      * GET: /books/
      *
      * @param model Model
-     * @return books/index page
+     * @return books/index page view
      */
     @GetMapping(value = {"", "/"})
     public String index(final Model model) {
@@ -49,8 +49,8 @@ public class BooksController {
      * @return books/show specific book page view
      */
     @GetMapping(value = "/{id}")
-    public String show(@PathVariable String id, Model model) {
-        model.addAttribute("book", booksService.findById(Long.parseLong(id)));
+    public String show(@PathVariable final Long id, final Model model) {
+        model.addAttribute("book", booksService.findById(id));
         return "books/show";
     }
 
@@ -62,7 +62,7 @@ public class BooksController {
      * @return books/new book view
      */
     @GetMapping(value = "/new")
-    public String create(@ModelAttribute("book") BookV2 book) {
+    public String create(@ModelAttribute("book") final BookV2 book) {
         return "books/new";
     }
 
@@ -71,11 +71,25 @@ public class BooksController {
      * POST: /books/
      *
      * @param book Book
-     * @return books/index page
+     * @return books/index page view
      */
     @PostMapping(value = "/")
-    public String store(@ModelAttribute("book") BookV2 book) {
+    public String store(@ModelAttribute("book") final BookV2 book) {
         booksService.save(book);
         return "redirect:/books/";
+    }
+
+    /**
+     * Method displays view to update the book.
+     * GET: /books/{id}/edit
+     *
+     * @param id    Id
+     * @param model Model
+     * @return books/edit book view
+     */
+    @GetMapping(value = "/{id}/edit")
+    public String edit(@PathVariable final Long id, final Model model) {
+        model.addAttribute("book", new BookV2("updateMe"));
+        return "books/edit";
     }
 }
