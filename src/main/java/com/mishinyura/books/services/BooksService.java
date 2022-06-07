@@ -26,4 +26,12 @@ public interface BooksService {
      * @return BookV2
      */
     BookV2 findById(Long id);
+
+    /**
+     * Method saves the book.
+     *
+     * @param book Book
+     * @return BookV2
+     */
+    BookV2 save(BookV2 book);
 }

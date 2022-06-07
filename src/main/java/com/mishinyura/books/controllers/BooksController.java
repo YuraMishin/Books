@@ -65,4 +65,17 @@ public class BooksController {
     public String create(@ModelAttribute("book") BookV2 book) {
         return "books/new";
     }
+
+    /**
+     * Method saves the book.
+     * POST: /books/
+     *
+     * @param book Book
+     * @return books/index page
+     */
+    @PostMapping(value = "/")
+    public String store(@ModelAttribute("book") BookV2 book) {
+        booksService.save(book);
+        return "redirect:/books/";
+    }
 }

@@ -4,6 +4,7 @@ import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -49,5 +50,17 @@ public class BooksServiceImpl implements BooksService {
             throw new RuntimeException("Book not found!");
         }
         return book.get();
+    }
+
+    /**
+     * Method saves the book.
+     *
+     * @param book Book
+     * @return BookV2
+     */
+    @Override
+    @Transactional
+    public BookV2 save(BookV2 book) {
+        return booksRepository.save(book);
     }
 }

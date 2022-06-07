@@ -11,7 +11,8 @@
 <!--/*@thymesVar id="book" type="com.mishinyura.books.models.BookV2"*/-->
 <h1>Books - Index</h1>
 <p>
-    <a href="../">Back</a>
+    <a href="../">Home</a>&nbsp;|&nbsp;
+    <a href="/books/new">Add Book</a>
 </p>
 <div th:if="${not #lists.isEmpty(books)}">
     <table class="table table-striped">
