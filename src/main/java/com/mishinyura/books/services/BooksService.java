@@ -34,4 +34,11 @@ public interface BooksService {
      * @return BookV2
      */
     BookV2 save(BookV2 book);
+
+    /**
+     * Method deletes book by id.
+     *
+     * @param id Id
+     */
+    void deleteById(Long id);
 }
