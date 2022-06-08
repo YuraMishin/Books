@@ -5,6 +5,7 @@ import com.mishinyura.books.services.BooksServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -108,6 +109,19 @@ public class BooksController {
         BookV2 bookToBeUpdated = booksService.findById(id);
         bookToBeUpdated.setTitle(book.getTitle());
         booksService.save(bookToBeUpdated);
+        return "redirect:/books/";
+    }
+
+    /**
+     * Method removes the book by id.
+     * DELETE: /books/{id}
+     *
+     * @param id Id
+     * @return books/index page view
+     */
+    @DeleteMapping(value = "/{id}")
+    public String delete(@PathVariable("id") final Long id) {
+        booksService.deleteById(id);
         return "redirect:/books/";
     }
 }

@@ -60,7 +60,17 @@ public class BooksServiceImpl implements BooksService {
      */
     @Override
     @Transactional
-    public BookV2 save(BookV2 book) {
+    public BookV2 save(final BookV2 book) {
         return booksRepository.save(book);
+    }
+
+    /**
+     * Method deletes book by id.
+     *
+     * @param id Id
+     */
+    @Override
+    public void deleteById(final Long id) {
+        booksRepository.deleteById(id);
     }
 }
