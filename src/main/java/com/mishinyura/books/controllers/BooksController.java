@@ -5,6 +5,7 @@ import com.mishinyura.books.services.BooksServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 /**
  * Class BooksController.
@@ -72,11 +75,16 @@ public class BooksController {
      * Method saves the book.
      * POST: /books/
      *
-     * @param book Book
+     * @param book          Book
+     * @param bindingResult BindingResult
      * @return books/index page view
      */
     @PostMapping(value = "/")
-    public String store(@ModelAttribute("book") final BookV2 book) {
+    public String store(@Valid @ModelAttribute("book") final BookV2 book,
+                        final BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "books/new";
+        }
         booksService.save(book);
         return "redirect:/books/";
     }
@@ -99,13 +107,18 @@ public class BooksController {
      * Method updates the book.
      * PATCH: /books/{id}
      *
-     * @param book Book
-     * @param id   Id
+     * @param book          Book
+     * @param bindingResult BindingResult
+     * @param id            Id
      * @return books/index page view
      */
     @PatchMapping(value = "/{id}")
-    public String update(@ModelAttribute("book") final BookV2 book,
+    public String update(@Valid @ModelAttribute("book") final BookV2 book,
+                         final BindingResult bindingResult,
                          @PathVariable("id") final Long id) {
+        if (bindingResult.hasErrors()) {
+            return "books/edit";
+        }
         BookV2 bookToBeUpdated = booksService.findById(id);
         bookToBeUpdated.setTitle(book.getTitle());
         booksService.save(bookToBeUpdated);
