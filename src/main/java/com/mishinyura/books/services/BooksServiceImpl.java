@@ -1,8 +1,11 @@
 package com.mishinyura.books.services;
 
+import com.mishinyura.books.dao.BookV2Mapper;
+import com.mishinyura.books.dao.SqlQueries;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,11 @@ public class BooksServiceImpl implements BooksService {
     private final BooksRepository booksRepository;
 
     /**
+     * JdbcTemplate.
+     */
+    private final JdbcTemplate jdbcTemplate;
+
+    /**
      * Method gets all the books.
      *
      * @return List<BookV2>
@@ -35,6 +43,15 @@ public class BooksServiceImpl implements BooksService {
         return StreamSupport
                 .stream(booksRepository.findAll().spliterator(), false)
                 .toList();
+    }
+
+    /**
+     * Method gets all the books.
+     *
+     * @return List<BookV2>
+     */
+    public List<BookV2> findAllViaJDBCTemplate() {
+        return jdbcTemplate.query(SqlQueries.FIND_ALL_BOOKS, new BookV2Mapper());
     }
 
     /**
