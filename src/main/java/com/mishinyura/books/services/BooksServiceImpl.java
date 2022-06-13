@@ -112,6 +112,7 @@ public class BooksServiceImpl implements BooksService {
      */
     @Override
     public void deleteById(final Long id) {
-        booksRepository.deleteById(id);
+//        booksRepository.deleteById(id);
+        jdbcTemplate.update(SqlQueries.DELETE_BOOK_BY_ID, id);
     }
 }
