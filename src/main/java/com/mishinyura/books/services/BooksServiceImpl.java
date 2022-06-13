@@ -51,7 +51,8 @@ public class BooksServiceImpl implements BooksService {
      * @return List<BookV2>
      */
     public List<BookV2> findAllViaJDBCTemplate() {
-        return jdbcTemplate.query(SqlQueries.FIND_ALL_BOOKS, new BookV2Mapper());
+        return jdbcTemplate
+                .query(SqlQueries.FIND_ALL_BOOKS, new BookV2Mapper());
     }
 
     /**
@@ -67,6 +68,25 @@ public class BooksServiceImpl implements BooksService {
             throw new RuntimeException("Book not found!");
         }
         return book.get();
+    }
+
+    /**
+     * Method retrieves the specific book by id.
+     *
+     * @param id Id
+     * @return BookV2
+     */
+    public BookV2 findByIdViaJDBCTemplate(final Long id) {
+//        Optional<BookV2> book = booksRepository.findById(id);
+//        if (bookFound.isEmpty()) {
+//            throw new RuntimeException("Book not found!");
+//        }
+//        return bookFound.get(0);
+        return jdbcTemplate
+                .query(SqlQueries.FIND_BOOK_BY_ID, new BookV2Mapper(), id)
+                .stream()
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("Book not found!"));
     }
 
     /**
