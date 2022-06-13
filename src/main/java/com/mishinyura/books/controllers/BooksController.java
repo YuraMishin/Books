@@ -139,4 +139,16 @@ public class BooksController {
         booksService.deleteById(id);
         return "redirect:/books/";
     }
+
+    /**
+     * Method adds ten books.
+     * GET: /books/addTen
+     *
+     * @return books/index page view
+     */
+    @GetMapping(value = "/addTen")
+    public String addTenBooks() {
+        booksService.addTenBooks();
+        return "redirect:/books/";
+    }
 }

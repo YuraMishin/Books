@@ -5,11 +5,14 @@ import com.mishinyura.books.dao.SqlQueries;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
@@ -114,5 +117,26 @@ public class BooksServiceImpl implements BooksService {
     public void deleteById(final Long id) {
 //        booksRepository.deleteById(id);
         jdbcTemplate.update(SqlQueries.DELETE_BOOK_BY_ID, id);
+    }
+
+    /**
+     * Method adds ten books via batchUpdate.
+     */
+    public void addTenBooks() {
+        jdbcTemplate.batchUpdate(
+                SqlQueries.INSERT_BOOK,
+                new BatchPreparedStatementSetter() {
+                    @Override
+                    public void setValues(
+                            final PreparedStatement ps,
+                            final int i) throws SQLException {
+                        ps.setString(1, "batchUpdate");
+                    }
+
+                    @Override
+                    public int getBatchSize() {
+                        return 10;
+                    }
+                });
     }
 }
