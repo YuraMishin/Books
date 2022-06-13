@@ -56,7 +56,8 @@ public class BooksController {
      */
     @GetMapping(value = "/{id}")
     public String show(@PathVariable final Long id, final Model model) {
-        model.addAttribute("book", booksService.findById(id));
+//        model.addAttribute("book", booksService.findById(id));
+        model.addAttribute("book", booksService.findByIdViaJDBCTemplate(id));
         return "books/show";
     }
 
