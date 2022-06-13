@@ -5,6 +5,7 @@ import com.mishinyura.books.dao.SqlQueries;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -83,7 +84,10 @@ public class BooksServiceImpl implements BooksService {
 //        }
 //        return bookFound.get(0);
         return jdbcTemplate
-                .query(SqlQueries.FIND_BOOK_BY_ID, new BookV2Mapper(), id)
+                .query(
+                        SqlQueries.FIND_BOOK_BY_ID,
+                        new BeanPropertyRowMapper<>(BookV2.class),
+                        id)
                 .stream()
                 .findAny()
                 .orElseThrow(() -> new RuntimeException("Book not found!"));
