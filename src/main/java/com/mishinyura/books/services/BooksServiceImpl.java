@@ -75,6 +75,23 @@ public class BooksServiceImpl implements BooksService {
     }
 
     /**
+     * Method retrieves the specific book by title.
+     *
+     * @param title Title
+     * @return BookV2
+     */
+    @Override
+    public Optional<BookV2> findByTitle(final String title) {
+        return jdbcTemplate
+                .query(
+                        SqlQueries.FIND_BOOK_BY_TITLE,
+                        new BeanPropertyRowMapper<>(BookV2.class),
+                        title)
+                .stream()
+                .findAny();
+    }
+
+    /**
      * Method retrieves the specific book by id.
      *
      * @param id Id
