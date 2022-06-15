@@ -39,6 +39,15 @@ public final class SqlQueries {
             """;
 
     /**
+     * Find book by title.
+     */
+    public static final String FIND_BOOK_BY_TITLE = """
+            SELECT id, title, created_at, updated_at, version
+            FROM books
+            WHERE title = ?;
+            """;
+
+    /**
      * Update book by id.
      */
     public static final String UPDATE_BOOK_BY_ID = """

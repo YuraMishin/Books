@@ -3,6 +3,7 @@ package com.mishinyura.books.services;
 import com.mishinyura.books.models.BookV2;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Interface BooksService.
@@ -26,6 +27,14 @@ public interface BooksService {
      * @return BookV2
      */
     BookV2 findById(Long id);
+
+    /**
+     * Method retrieves the specific book by title.
+     *
+     * @param title Title
+     * @return BookV2
+     */
+    Optional<BookV2> findByTitle(String title);
 
     /**
      * Method saves the book.

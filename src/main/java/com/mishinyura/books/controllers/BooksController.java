@@ -2,6 +2,7 @@ package com.mishinyura.books.controllers;
 
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.services.BooksServiceImpl;
+import com.mishinyura.books.utils.BookValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,6 +32,11 @@ public class BooksController {
      * Book Service.
      */
     private final BooksServiceImpl booksService;
+
+    /**
+     * Book Validator.
+     */
+    private final BookValidator bookValidator;
 
     /**
      * Method displays view with all books.
@@ -84,6 +90,9 @@ public class BooksController {
     @PostMapping(value = "/")
     public String store(@Valid @ModelAttribute("book") final BookV2 book,
                         final BindingResult bindingResult) {
+
+        bookValidator.validate(book, bindingResult);
+
         if (bindingResult.hasErrors()) {
             return "books/new";
         }
