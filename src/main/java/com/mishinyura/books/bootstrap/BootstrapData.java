@@ -30,8 +30,8 @@ public class BootstrapData implements CommandLineRunner {
      */
     @Override
     public void run(final String... args) {
-        booksRepository.save(new BookV2("title1CLR"));
-        booksRepository.save(new BookV2("title2CLR"));
+        booksRepository.save(new BookV2("Title1CLR"));
+        booksRepository.save(new BookV2("Title2CLR"));
         log.info("Loaded: {} book(s)", booksRepository.count());
     }
 }
