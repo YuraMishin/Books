@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Version;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -40,6 +41,7 @@ public class BookV2 {
     /**
      * Title.
      */
+    @Pattern(regexp = "[A-Z]\\w+", message = "Incorrect pattern!")
     @NotEmpty(message = "Title should not be empty")
     @Size(min = 2, max = 50, message = "Title should be between 2 and 50")
     @Column(name = "title", length = 50, nullable = false)
