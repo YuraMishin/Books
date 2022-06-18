@@ -47,8 +47,7 @@ public class BooksController {
      */
     @GetMapping(value = {"", "/"})
     public String index(final Model model) {
-//        model.addAttribute("books", booksService.findAll());
-        model.addAttribute("books", booksService.findAllViaJDBCTemplate());
+        model.addAttribute("books", booksService.findAll());
         return "books/index";
     }
 
@@ -62,8 +61,7 @@ public class BooksController {
      */
     @GetMapping(value = "/{id}")
     public String show(@PathVariable final Long id, final Model model) {
-//        model.addAttribute("book", booksService.findById(id));
-        model.addAttribute("book", booksService.findByIdViaJDBCTemplate(id));
+        model.addAttribute("book", booksService.findById(id));
         return "books/show";
     }
 

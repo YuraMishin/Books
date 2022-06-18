@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * Class BooksServiceImpl.
@@ -26,6 +25,7 @@ import java.util.stream.StreamSupport;
  */
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class BooksServiceImpl implements BooksService {
     /**
      * BooksRepository.
@@ -44,9 +44,7 @@ public class BooksServiceImpl implements BooksService {
      */
     @Override
     public List<BookV2> findAll() {
-        return StreamSupport
-                .stream(booksRepository.findAll().spliterator(), false)
-                .toList();
+        return booksRepository.findAll();
     }
 
     /**
@@ -67,11 +65,11 @@ public class BooksServiceImpl implements BooksService {
      */
     @Override
     public BookV2 findById(final Long id) {
-        Optional<BookV2> book = booksRepository.findById(id);
-        if (book.isEmpty()) {
-            throw new RuntimeException("Book not found!");
-        }
-        return book.get();
+        return booksRepository
+                .findById(id)
+                .stream()
+                .findAny()
+                .orElseThrow(() -> new RuntimeException("Book not found!"));
     }
 
     /**
@@ -98,11 +96,6 @@ public class BooksServiceImpl implements BooksService {
      * @return BookV2
      */
     public BookV2 findByIdViaJDBCTemplate(final Long id) {
-//        Optional<BookV2> book = booksRepository.findById(id);
-//        if (bookFound.isEmpty()) {
-//            throw new RuntimeException("Book not found!");
-//        }
-//        return bookFound.get(0);
         return jdbcTemplate
                 .query(
                         SqlQueries.FIND_BOOK_BY_ID,
@@ -131,9 +124,9 @@ public class BooksServiceImpl implements BooksService {
      * @param id Id
      */
     @Override
+    @Transactional
     public void deleteById(final Long id) {
-//        booksRepository.deleteById(id);
-        jdbcTemplate.update(SqlQueries.DELETE_BOOK_BY_ID, id);
+        booksRepository.deleteById(id);
     }
 
     /**
