@@ -35,6 +35,7 @@ public class BookV2 {
      * Id.
      */
     @Id
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
