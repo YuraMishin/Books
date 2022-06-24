@@ -58,4 +58,13 @@ public interface BooksService {
      * @return List<BookV2>
      */
     List<BookV2> searchByTitle(String title);
+
+    /**
+     * Method retrieves books with pagination.
+     *
+     * @param page         Page
+     * @param booksPerPage Books per page
+     * @return List<BookV2>
+     */
+    List<BookV2> findWithPagination(Integer page, Integer booksPerPage);
 }
