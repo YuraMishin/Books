@@ -3,6 +3,7 @@ package com.mishinyura.books.repositories;
 import com.mishinyura.books.models.BookV2;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -20,4 +21,12 @@ public interface BooksRepository extends JpaRepository<BookV2, Long> {
      * @return Optional<BookV2>
      */
     Optional<BookV2> findByTitle(String title);
+
+    /**
+     * Method finds book by title starting with some letters.
+     *
+     * @param title Title
+     * @return List<BookV2>
+     */
+    List<BookV2> findByTitleStartingWith(String title);
 }

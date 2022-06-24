@@ -1,5 +1,6 @@
 package com.mishinyura.books.models;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
  * @author Mishin Yura (mishin.inbox@gmail.com)
  * @since 27.05.2022
  */
+@EqualsAndHashCode
 @NoArgsConstructor
 @Getter
 @Setter
@@ -51,6 +53,7 @@ public class BookV2 {
     /**
      * Created at.
      */
+    @EqualsAndHashCode.Exclude
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -58,6 +61,7 @@ public class BookV2 {
     /**
      * Updated at.
      */
+    @EqualsAndHashCode.Exclude
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -65,6 +69,7 @@ public class BookV2 {
     /**
      * Version.
      */
+    @EqualsAndHashCode.Exclude
     @Version
     private Long version = 1L;
 
@@ -74,6 +79,17 @@ public class BookV2 {
      * @param title Title
      */
     public BookV2(final String title) {
+        this.title = title;
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param id    Id
+     * @param title Title
+     */
+    public BookV2(final Long id, final String title) {
+        this.id = id;
         this.title = title;
     }
 }

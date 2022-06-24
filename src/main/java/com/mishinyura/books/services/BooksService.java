@@ -50,4 +50,12 @@ public interface BooksService {
      * @param id Id
      */
     void deleteById(Long id);
+
+    /**
+     * Method retrieves the specific books by title.
+     *
+     * @param title Title
+     * @return List<BookV2>
+     */
+    List<BookV2> searchByTitle(String title);
 }
