@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books - Search</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+</head>
+<body>
+<h1>Books - Search</h1>
+<p>
+    <a href="../">Home</a>&nbsp;|&nbsp;
+    <a href="/books/new">Add Book</a>&nbsp;|&nbsp;
+    <a href="/books/addTen">Add 10 Books</a>&nbsp;|&nbsp;
+    <a href="/books/search">Search a book</a>&nbsp;|&nbsp;
+</p>
+<div class="container">
+    <form th:action="@{/books/search}"
+          th:method="POST">
+        <div class="form-group">
+            <label for="query">Title</label>
+            <input type="text" class="form-control" id="query"
+                   placeholder="Enter title"
+                   name="query">
+        </div>
+        <div class="form-group">
+            <p>&nbsp;</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <p>&nbsp;</p>
+    <div th:if="${books}">
+        <div th:if="${books.isEmpty()}">
+            <p>No books found !</p>
+        </div>
+        <div th:unless="${books.isEmpty()}">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">View</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <td th:text="${book.id}"></td>
+                    <td th:text="${book.title}"></td>
+                    <td><a th:href="@{/books/{id}(id=${book.id})}">View</a></td>
+                    <td><a th:href="@{/books/{id}/edit(id=${book.id})}">Edit</a>
+                    </td>
+                    <td>
+                        <form th:method="DELETE"
+                              th:action="@{/books/{id}(id=${book.getId()})}">
+                            <button type="submit" class="btn btn-primary">Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

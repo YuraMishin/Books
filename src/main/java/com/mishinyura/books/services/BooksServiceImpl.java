@@ -5,6 +5,7 @@ import com.mishinyura.books.dao.SqlQueries;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Class BooksServiceImpl.
@@ -44,7 +47,7 @@ public class BooksServiceImpl implements BooksService {
      */
     @Override
     public List<BookV2> findAll() {
-        return booksRepository.findAll();
+        return booksRepository.findAll(Sort.by("id"));
     }
 
     /**
@@ -136,11 +139,13 @@ public class BooksServiceImpl implements BooksService {
         jdbcTemplate.batchUpdate(
                 SqlQueries.INSERT_BOOK,
                 new BatchPreparedStatementSetter() {
+                    Random rnd = ThreadLocalRandom.current();
+
                     @Override
                     public void setValues(
                             final PreparedStatement ps,
                             final int i) throws SQLException {
-                        ps.setString(1, "batchUpdate");
+                        ps.setString(1, "batchUpdate" + rnd.nextInt(1000));
                     }
 
                     @Override
@@ -148,5 +153,16 @@ public class BooksServiceImpl implements BooksService {
                         return 10;
                     }
                 });
+    }
+
+    /**
+     * Method retrieves the specific books by title.
+     *
+     * @param title Title
+     * @return List<BookV2>
+     */
+    @Override
+    public List<BookV2> searchByTitle(final String title) {
+        return booksRepository.findByTitleStartingWith(title);
     }
 }

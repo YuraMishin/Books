@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
 
@@ -157,5 +158,34 @@ public class BooksController {
     public String addTenBooks() {
         booksService.addTenBooks();
         return "redirect:/books/";
+    }
+
+    /**
+     * Method displays search a book view.
+     * GET: /books/search
+     *
+     * @return books/search page view
+     */
+    @GetMapping(value = "/search")
+    public String displaySearchView() {
+        return "books/search";
+    }
+
+
+    /**
+     * Method searches the books.
+     * POST: /books/search
+     *
+     * @param query Query
+     * @param model Model
+     * @return books/search page view
+     */
+    @PostMapping(value = "/search")
+    public String performSearch(
+            @RequestParam("query") final String query,
+            final Model model
+    ) {
+        model.addAttribute("books", booksService.findByTitle(query));
+        return "books/search";
     }
 }
