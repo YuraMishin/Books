@@ -5,6 +5,7 @@ import com.mishinyura.books.dao.SqlQueries;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -164,5 +165,21 @@ public class BooksServiceImpl implements BooksService {
     @Override
     public List<BookV2> searchByTitle(final String title) {
         return booksRepository.findByTitleStartingWith(title);
+    }
+
+    /**
+     * Method retrieves books with pagination.
+     *
+     * @param page         Page
+     * @param booksPerPage Books per page
+     * @return List<BookV2>
+     */
+    @Override
+    public List<BookV2> findWithPagination(
+            final Integer page,
+            final Integer booksPerPage) {
+        return booksRepository
+                .findAll(PageRequest.of(page, booksPerPage, Sort.by("id")))
+                .getContent();
     }
 }

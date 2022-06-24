@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 /**
  * Class BooksController.
@@ -43,12 +44,22 @@ public class BooksController {
      * Method displays view with all books.
      * GET: /books/
      *
-     * @param model Model
+     * @param model        Model
+     * @param page         Page
+     * @param booksPerPage Books per page
      * @return books/index page view
      */
     @GetMapping(value = {"", "/"})
-    public String index(final Model model) {
-        model.addAttribute("books", booksService.findAll());
+    public String index(
+            final Model model,
+            @RequestParam(value = "page", required = false) final Integer page,
+            @RequestParam(value = "books_per_page", required = false) final Integer booksPerPage
+    ) {
+        if (Objects.isNull(page) || Objects.isNull(booksPerPage)) {
+            model.addAttribute("books", booksService.findAll());
+        } else {
+            model.addAttribute("books", booksService.findWithPagination(page, booksPerPage));
+        }
         return "books/index";
     }
 
