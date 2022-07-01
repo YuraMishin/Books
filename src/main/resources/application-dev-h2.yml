@@ -2,7 +2,7 @@ logging:
   level:
     root: error
     com.mishinyura.books: info
-#    org.springframework.jdbc.core: debug
+  #    org.springframework.jdbc.core: debug
   file.name: logs/application.log
 
 spring:
@@ -34,3 +34,8 @@ spring:
     locations: classpath:db/migration/h2
     sql-migration-prefix: H
     driver-class-name: org.h2.Driver
+
+  security:
+    user:
+      name: user
+      password: 1
