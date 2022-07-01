@@ -18,6 +18,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Class BookV2.
@@ -26,7 +27,6 @@ import java.time.LocalDateTime;
  * @author Mishin Yura (mishin.inbox@gmail.com)
  * @since 27.05.2022
  */
-@EqualsAndHashCode
 @NoArgsConstructor
 @Getter
 @Setter
@@ -91,5 +91,33 @@ public class BookV2 {
     public BookV2(final Long id, final String title) {
         this.id = id;
         this.title = title;
+    }
+
+    /**
+     * @param o Object
+     * @return boolean
+     */
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        BookV2 bookV2 = (BookV2) o;
+        return id.equals(bookV2.id)
+                && title.equals(bookV2.title)
+                && createdAt.equals(bookV2.createdAt)
+                && updatedAt.equals(bookV2.updatedAt)
+                && version.equals(bookV2.version);
+    }
+
+    /**
+     * @return int
+     */
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, createdAt, updatedAt, version);
     }
 }
