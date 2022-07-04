@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books Project</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+</head>
+<body>
+<h1>Login page</h1>
+<div class="container">
+    <form name="f" action="/process_login" th:method="POST">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username"
+                   placeholder="Enter username"
+                   name="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" id="password"
+                   placeholder="Enter password"
+                   name="password">
+        </div>
+        <div class="form-group">
+            <p>&nbsp;</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+
+        <div class="form-group">
+            <p>&nbsp;</p>
+        </div>
+        <div th:if="${param.error}" class="form-group" style="color: red">
+            <p>Wrong credentials !</p>
+        </div>
+    </form>
+</div>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
