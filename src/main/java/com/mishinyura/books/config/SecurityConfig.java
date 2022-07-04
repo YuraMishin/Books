@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -39,6 +40,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 //        auth.authenticationProvider(authProvider);
         auth.userDetailsService(userDetailsService);
+    }
+
+    /**
+     * @param http Http
+     * @throws Exception Exception
+     */
+    @Override
+    protected void configure(final HttpSecurity http) throws Exception {
+        var freeAccessPaths = new String[]{
+                "/auth/login",
+                "/error",
+                "/css/**",
+                "/js/**",
+                "/favicon.ico"
+        };
+
+        http.csrf().disable()
+                .authorizeRequests()
+                .antMatchers(freeAccessPaths).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/auth/login")
+                .loginProcessingUrl("/process_login")
+                .defaultSuccessUrl("/books", true)
+                .failureUrl("/auth/login?error");
     }
 
     /**
