@@ -4,7 +4,5 @@
 
 - git clone https://github.com/YuraMishin/books.git
 - cd books
-- chmod +x ./mvnw
-- ./mvnw clean package -DskipTests
 - docker-compose up
 - Go to http://your_IP_host:8080/
