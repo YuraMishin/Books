@@ -29,7 +29,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
     /**
      * @param authentication Authentication
      * @return Authentication
-     * @throws AuthenticationException
+     * @throws AuthenticationException AuthenticationException
      */
     @Override
     public Authentication authenticate(final Authentication authentication) throws AuthenticationException {
