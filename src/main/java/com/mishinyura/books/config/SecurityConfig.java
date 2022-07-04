@@ -49,14 +49,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         var freeAccessPaths = new String[]{
+                "/h2-console/**",
                 "/auth/login",
+                "/auth/registration",
                 "/error",
                 "/css/**",
                 "/js/**",
                 "/favicon.ico"
         };
 
-        http.csrf().disable()
+        http
+                .headers().frameOptions().disable()
+                .and()
+                .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(freeAccessPaths).permitAll()
                 .anyRequest().authenticated()
