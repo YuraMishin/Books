@@ -2,6 +2,8 @@ package com.mishinyura.books.services;
 
 import com.mishinyura.books.models.User;
 
+import java.util.Optional;
+
 /**
  * Interface UsersService.
  * Declares Users Service.
@@ -16,4 +18,12 @@ public interface UsersService {
      * @param user User
      */
     void save(User user);
+
+    /**
+     * Method finds user by username.
+     *
+     * @param username Username
+     * @return Optional<User>
+     */
+    Optional<User> findByUsername(String username);
 }

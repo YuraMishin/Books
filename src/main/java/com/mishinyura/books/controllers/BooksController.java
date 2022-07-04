@@ -31,7 +31,7 @@ import java.util.Objects;
 @RequestMapping("/books")
 public class BooksController {
     /**
-     * Book Service.
+     * Books Service.
      */
     private final BooksServiceImpl booksService;
 

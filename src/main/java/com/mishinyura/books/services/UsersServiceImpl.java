@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 /**
  * Class UsersServiceImpl.
  * Implements Users Service.
@@ -31,5 +33,16 @@ public class UsersServiceImpl implements UsersService {
     @Transactional
     public void save(final User user) {
         usersRepository.save(user);
+    }
+
+    /**
+     * Method finds user by username.
+     *
+     * @param username Username
+     * @return Optional<User>
+     */
+    @Override
+    public Optional<User> findByUsername(final String username) {
+        return usersRepository.findByUsername(username);
     }
 }

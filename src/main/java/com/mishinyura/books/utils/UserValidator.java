@@ -1,26 +1,26 @@
 package com.mishinyura.books.utils;
 
-import com.mishinyura.books.models.BookV2;
-import com.mishinyura.books.services.BooksServiceImpl;
+import com.mishinyura.books.models.User;
+import com.mishinyura.books.services.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 /**
- * Class BookValidator.
- * Implements Book Validator.
+ * Class UserValidator.
+ * Implements User Validator.
  *
  * @author Mishin Yura (mishin.inbox@gmail.com)
- * @since 15.06.2022
+ * @since 04.07.2022
  */
 @RequiredArgsConstructor
 @Component
-public class BookValidator implements Validator {
+public class UserValidator implements Validator {
     /**
-     * Book Service.
+     * Users Service.
      */
-    private final BooksServiceImpl booksService;
+    private final UsersService usersService;
 
     /**
      * @param clazz Clazz
@@ -28,7 +28,7 @@ public class BookValidator implements Validator {
      */
     @Override
     public boolean supports(final Class<?> clazz) {
-        return BookV2.class.equals(clazz);
+        return User.class.equals(clazz);
     }
 
     /**
@@ -37,9 +37,10 @@ public class BookValidator implements Validator {
      */
     @Override
     public void validate(final Object target, final Errors errors) {
-        BookV2 book = (BookV2) target;
-        if (booksService.findByTitle(book.getTitle()).isPresent()) {
-            errors.rejectValue("title", "", "This title is already taken");
+        var user = (User) target;
+        if (usersService.findByUsername(user.getUsername()).isPresent()) {
+            errors.rejectValue("username", "",
+                    "This username is already taken");
         }
     }
 }

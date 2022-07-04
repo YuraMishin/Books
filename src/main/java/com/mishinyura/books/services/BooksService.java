@@ -37,6 +37,14 @@ public interface BooksService {
     Optional<BookV2> findByTitle(String title);
 
     /**
+     * Method retrieves the specific book by title.
+     *
+     * @param title Title
+     * @return BookV2
+     */
+    Optional<BookV2> findByTitleV2(String title);
+
+    /**
      * Method saves the book.
      *
      * @param book Book
