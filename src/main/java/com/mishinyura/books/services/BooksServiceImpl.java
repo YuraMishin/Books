@@ -94,6 +94,17 @@ public class BooksServiceImpl implements BooksService {
     }
 
     /**
+     * Method retrieves the specific book by title.
+     *
+     * @param title Title
+     * @return BookV2
+     */
+    @Override
+    public Optional<BookV2> findByTitleV2(final String title) {
+        return booksRepository.findByTitle(title);
+    }
+
+    /**
      * Method retrieves the specific book by id.
      *
      * @param id Id
