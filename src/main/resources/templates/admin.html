@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Books Project</title>
+    <link th:href="@{/css/bootstrap.min.css}"
+          rel="stylesheet"/>
+</head>
+<body>
+<h1>Admin page</h1>
+<p>
+    <a href="/books/">Books - Index</a>&nbsp;|&nbsp;
+<form th:action="@{/logout}" th:method="POST">
+    <input type="submit" value="Logout" />
+</form>&nbsp;|&nbsp;
+</p>
+<script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
