@@ -3,6 +3,7 @@ package com.mishinyura.books.services;
 import com.mishinyura.books.models.User;
 import com.mishinyura.books.repositories.UsersRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,11 @@ public class UsersServiceImpl implements UsersService {
     private final UsersRepository usersRepository;
 
     /**
+     * Password Encoder.
+     */
+    private final PasswordEncoder passwordEncoder;
+
+    /**
      * Method saves the user.
      *
      * @param user User
@@ -32,7 +38,10 @@ public class UsersServiceImpl implements UsersService {
     @Override
     @Transactional
     public void save(final User user) {
-        usersRepository.save(user);
+        var userToBeSaved = new User();
+        userToBeSaved.setUsername(user.getUsername());
+        userToBeSaved.setPassword(passwordEncoder.encode(user.getPassword()));
+        usersRepository.save(userToBeSaved);
     }
 
     /**
