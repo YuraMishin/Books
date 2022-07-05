@@ -50,4 +50,10 @@ public class User {
     @NotEmpty(message = "Password should not be empty")
     @Column(name = "password", nullable = false)
     private String password;
+
+    /**
+     * Role.
+     */
+    @Column(name = "role", nullable = false)
+    private String role;
 }

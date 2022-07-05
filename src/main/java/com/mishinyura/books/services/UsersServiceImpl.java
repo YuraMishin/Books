@@ -41,6 +41,7 @@ public class UsersServiceImpl implements UsersService {
         var userToBeSaved = new User();
         userToBeSaved.setUsername(user.getUsername());
         userToBeSaved.setPassword(passwordEncoder.encode(user.getPassword()));
+        userToBeSaved.setRole("ROLE_USER");
         usersRepository.save(userToBeSaved);
     }
 

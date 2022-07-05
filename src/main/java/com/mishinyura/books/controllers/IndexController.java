@@ -29,10 +29,21 @@ public class IndexController {
      * Method displays index page.
      * GET: /, /index
      *
-     * @return String
+     * @return index index page view
      */
     @GetMapping(value = {"", "/", "/index"})
     public String index() {
         return "index";
+    }
+
+    /**
+     * Method displays admin page.
+     * GET: /admin
+     *
+     * @return admin admin page view
+     */
+    @GetMapping("/admin")
+    public String adminPage() {
+        return "admin";
     }
 }
