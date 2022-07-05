@@ -48,7 +48,6 @@ public class User {
      * Password.
      */
     @NotEmpty(message = "Password should not be empty")
-    @Size(min = 2, max = 50, message = "Password should be between 2 and 50")
-    @Column(name = "password", length = 50, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 }
