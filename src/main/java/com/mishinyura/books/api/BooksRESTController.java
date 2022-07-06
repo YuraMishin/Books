@@ -1,13 +1,20 @@
 package com.mishinyura.books.api;
 
+import com.mishinyura.books.exceptions.BookNotFoundException;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.services.BooksServiceImpl;
+import com.mishinyura.books.utils.BookErrorResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -20,6 +27,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/books")
 @RequiredArgsConstructor
+@Slf4j
 public class BooksRESTController {
     /**
      * Books Service.
@@ -47,5 +55,21 @@ public class BooksRESTController {
     @GetMapping("/{id}")
     public BookV2 getBook(@PathVariable final Long id) {
         return booksService.findById(id);
+    }
+
+    /**
+     * Method handles BookNotFoundException.
+     *
+     * @param e Exception
+     * @return ResponseEntity<BookErrorResponse>
+     */
+    @ExceptionHandler
+    private ResponseEntity<BookErrorResponse> handleBookNotFoundException(final BookNotFoundException e) {
+        var response = new BookErrorResponse(
+                "Book not found !",
+                LocalDateTime.now()
+        );
+        log.error("{} - Exception caught - {}", response.date(), response.message());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }

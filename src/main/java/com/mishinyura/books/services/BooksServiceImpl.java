@@ -2,6 +2,7 @@ package com.mishinyura.books.services;
 
 import com.mishinyura.books.dao.BookV2Mapper;
 import com.mishinyura.books.dao.SqlQueries;
+import com.mishinyura.books.exceptions.BookNotFoundException;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.repositories.BooksRepository;
 import lombok.RequiredArgsConstructor;
@@ -73,7 +74,7 @@ public class BooksServiceImpl implements BooksService {
                 .findById(id)
                 .stream()
                 .findAny()
-                .orElseThrow(() -> new RuntimeException("Book not found!"));
+                .orElseThrow(BookNotFoundException::new);
     }
 
     /**
@@ -118,7 +119,7 @@ public class BooksServiceImpl implements BooksService {
                         id)
                 .stream()
                 .findAny()
-                .orElseThrow(() -> new RuntimeException("Book not found!"));
+                .orElseThrow(BookNotFoundException::new);
     }
 
     /**
