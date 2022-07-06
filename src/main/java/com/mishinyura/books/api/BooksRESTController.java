@@ -1,5 +1,6 @@
 package com.mishinyura.books.api;
 
+import com.mishinyura.books.dto.BookDTO;
 import com.mishinyura.books.exceptions.BookNotCreatedException;
 import com.mishinyura.books.exceptions.BookNotFoundException;
 import com.mishinyura.books.models.BookV2;
@@ -7,6 +8,7 @@ import com.mishinyura.books.services.BooksServiceImpl;
 import com.mishinyura.books.utils.BookErrorResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -41,14 +43,22 @@ public class BooksRESTController {
     private final BooksServiceImpl booksService;
 
     /**
+     * ModelMapper.
+     */
+    private final ModelMapper modelMapper;
+
+    /**
      * Method retrieves all the books.
      * GET: api/books/
      *
-     * @return List<BookV2>
+     * @return List<BookDTO>
      */
     @GetMapping("/")
-    public List<BookV2> getBooks() {
-        return booksService.findAll();
+    public List<BookDTO> getBooks() {
+        return booksService.findAll()
+                .stream()
+                .map(this::convertToBookDTO)
+                .toList();
     }
 
     /**
@@ -56,11 +66,11 @@ public class BooksRESTController {
      * GET: api/books/1
      *
      * @param id Id
-     * @return BookV2
+     * @return BookDTO
      */
     @GetMapping("/{id}")
-    public BookV2 getBook(@PathVariable final Long id) {
-        return booksService.findById(id);
+    public BookDTO getBook(@PathVariable final Long id) {
+        return convertToBookDTO(booksService.findById(id));
     }
 
     /**
@@ -83,13 +93,13 @@ public class BooksRESTController {
      * Method saves the book.
      * POST: api/books/
      *
-     * @param book          Book
+     * @param bookDTO       BookDTO
      * @param bindingResult BindingResult
      * @return ResponseEntity<HttpStatus>
      */
     @PostMapping
     public ResponseEntity<HttpStatus> store(
-            @RequestBody @Valid final BookV2 book,
+            @RequestBody @Valid final BookDTO bookDTO,
             final BindingResult bindingResult) {
 
         if (bindingResult.hasErrors()) {
@@ -104,8 +114,28 @@ public class BooksRESTController {
             throw new BookNotCreatedException(errorMsg.toString());
         }
 
-        booksService.save(book);
+        booksService.save(convertToBook(bookDTO));
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    /**
+     * Method converts BookDTO into BookV2.
+     *
+     * @param bookDTO BookDTO
+     * @return BookV2
+     */
+    private BookV2 convertToBook(final BookDTO bookDTO) {
+        return modelMapper.map(bookDTO, BookV2.class);
+    }
+
+    /**
+     * Method converts BookV2 into BookDTO.
+     *
+     * @param book BookV2
+     * @return BookDTO
+     */
+    private BookDTO convertToBookDTO(final BookV2 book) {
+        return modelMapper.map(book, BookDTO.class);
     }
 
     /**
