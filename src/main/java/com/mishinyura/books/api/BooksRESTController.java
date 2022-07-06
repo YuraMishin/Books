@@ -4,6 +4,7 @@ import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.services.BooksServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * @since 06.07.2022
  */
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/books")
 @RequiredArgsConstructor
 public class BooksRESTController {
     /**
@@ -27,12 +28,24 @@ public class BooksRESTController {
 
     /**
      * Method retrieves all the books.
-     * GET: /books
+     * GET: api/books/
      *
      * @return List<BookV2>
      */
-    @GetMapping("/books")
+    @GetMapping("/")
     public List<BookV2> getBooks() {
         return booksService.findAll();
+    }
+
+    /**
+     * Method retrieves the specific book.
+     * GET: api/books/1
+     *
+     * @param id Id
+     * @return BookV2
+     */
+    @GetMapping("/{id}")
+    public BookV2 getBook(@PathVariable final Long id) {
+        return booksService.findById(id);
     }
 }
