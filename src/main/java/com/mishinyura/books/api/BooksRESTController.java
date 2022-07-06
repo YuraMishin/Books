@@ -1,5 +1,6 @@
 package com.mishinyura.books.api;
 
+import com.mishinyura.books.exceptions.BookNotCreatedException;
 import com.mishinyura.books.exceptions.BookNotFoundException;
 import com.mishinyura.books.models.BookV2;
 import com.mishinyura.books.services.BooksServiceImpl;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -79,12 +83,44 @@ public class BooksRESTController {
      * Method saves the book.
      * POST: api/books/
      *
-     * @param book Book
+     * @param book          Book
+     * @param bindingResult BindingResult
      * @return ResponseEntity<HttpStatus>
      */
     @PostMapping
-    public ResponseEntity<HttpStatus> store(@RequestBody final BookV2 book) {
+    public ResponseEntity<HttpStatus> store(
+            @RequestBody @Valid final BookV2 book,
+            final BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            StringBuilder errorMsg = new StringBuilder();
+            List<FieldError> errors = bindingResult.getFieldErrors();
+            for (FieldError error : errors) {
+                errorMsg.append(error.getField())
+                        .append(" - ")
+                        .append(error.getDefaultMessage())
+                        .append(";");
+            }
+            throw new BookNotCreatedException(errorMsg.toString());
+        }
+
         booksService.save(book);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    /**
+     * Method handles BookNotCreatedException.
+     *
+     * @param e BookNotCreatedException
+     * @return ResponseEntity<BookErrorResponse>
+     */
+    @ExceptionHandler
+    private ResponseEntity<BookErrorResponse> handleBookNotCreatedException(final BookNotCreatedException e) {
+        var response = new BookErrorResponse(
+                e.getMessage(),
+                LocalDateTime.now()
+        );
+        log.error("{} - Exception caught - {}", response.date(), response.message());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 }
