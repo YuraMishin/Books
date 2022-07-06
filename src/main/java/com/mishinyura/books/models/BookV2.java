@@ -1,6 +1,5 @@
 package com.mishinyura.books.models;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -53,7 +52,6 @@ public class BookV2 {
     /**
      * Created at.
      */
-    @EqualsAndHashCode.Exclude
     @Column(name = "created_at", nullable = false, updatable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -61,7 +59,6 @@ public class BookV2 {
     /**
      * Updated at.
      */
-    @EqualsAndHashCode.Exclude
     @Column(name = "updated_at", nullable = false)
     @UpdateTimestamp
     private LocalDateTime updatedAt;
@@ -69,7 +66,6 @@ public class BookV2 {
     /**
      * Version.
      */
-    @EqualsAndHashCode.Exclude
     @Version
     private Long version = 1L;
 

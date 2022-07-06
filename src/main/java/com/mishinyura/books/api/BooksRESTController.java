@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -71,5 +73,18 @@ public class BooksRESTController {
         );
         log.error("{} - Exception caught - {}", response.date(), response.message());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Method saves the book.
+     * POST: api/books/
+     *
+     * @param book Book
+     * @return ResponseEntity<HttpStatus>
+     */
+    @PostMapping
+    public ResponseEntity<HttpStatus> store(@RequestBody final BookV2 book) {
+        booksService.save(book);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 }
